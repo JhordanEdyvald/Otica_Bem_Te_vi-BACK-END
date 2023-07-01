@@ -6,13 +6,17 @@ const tb_products = database.define('tb_products', {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primarykey: true
+        primaryKey: true
     },
     nameProduct: {
         type: Sequelize.STRING(150),
         allowNull: false
     },
     price: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+    },
+    lastPrice: {
         type: Sequelize.FLOAT,
         allowNull: false
     },
