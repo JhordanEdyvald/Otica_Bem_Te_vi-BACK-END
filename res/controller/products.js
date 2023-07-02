@@ -4,23 +4,31 @@ const tb_products = require("../modules/tb_products");
 const assessment = require("../modules/assessments");
 
 class Products {
+
+  async getCategoryProduct(category){
+    try{
+      const arrayProducts = await tb_products.findAll({where: {'category': category}});
+      const objectResolve = arrayProducts.map((element)=>{
+        return this.getProductObj(element.dataValues.id);
+      });
+      const products = await Promise.all(objectResolve);
+      return products;
+    }catch (error){
+      console.error('erro: '+ error);
+      throw error;
+    }
+  }
+
   async getProductObj(id) {
     let objectInfoProducts = {};
-    const tb_product = await tb_products
-      .findAll({ where: { id: id } })
-      .then((success) => {
-        objectInfoProducts["id"] = success[0].dataValues.id;
-        objectInfoProducts["img"] = success[0].dataValues.imgProduct;
-        objectInfoProducts["title"] = success[0].dataValues.nameProduct;
-        objectInfoProducts["installments"] = success[0].dataValues.installments;
-        objectInfoProducts["lastPrice"] = success[0].dataValues.lastPrice;
-        objectInfoProducts["assessments"] = {};
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const success = await tb_products.findAll({ where: { id: id } });
+    objectInfoProducts["id"] = success[0].dataValues.id;
+    objectInfoProducts["img"] = success[0].dataValues.imgProduct;
+    objectInfoProducts["title"] = success[0].dataValues.nameProduct;
+    objectInfoProducts["installments"] = success[0].dataValues.installments;
+    objectInfoProducts["lastPrice"] = success[0].dataValues.lastPrice;
     objectInfoProducts["assessments"] = await Products.processAssessments(id);
-    console.log(objectInfoProducts);
+    return objectInfoProducts;
   }
 
   static async processAssessments(id_product) {

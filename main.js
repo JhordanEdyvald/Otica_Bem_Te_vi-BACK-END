@@ -13,7 +13,7 @@ port = process.env.PORT;
 
 const products = require('./res/controller/products');
 const insta = new products;
-insta.getProductObj(2);
+insta.getCategoryProduct('jhordan');
 
 const Products = require('./res/controller/products');
 const insteste = new Products;

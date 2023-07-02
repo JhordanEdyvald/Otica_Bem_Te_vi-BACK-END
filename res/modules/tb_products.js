@@ -12,6 +12,10 @@ const tb_products = database.define('tb_products', {
         type: Sequelize.STRING(150),
         allowNull: false
     },
+    category: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    },
     price: {
         type: Sequelize.FLOAT,
         allowNull: false
