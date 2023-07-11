@@ -1,11 +1,12 @@
-const Sequelize = require("sequelize");
-const database = require("../../db");
+const express = require('express');
 const tb_products = require("../modules/tb_products");
 const assessment = require("../modules/assessments");
+const Routes = require('../routes/Config');
+
+const router = express.Router();
 
 class Products {
-
-  async getCategoryProduct(category){
+   async getCategoryProduct(category){
     try{
       const arrayProducts = await tb_products.findAll({where: {'category': category}});
       const objectResolve = arrayProducts.map((element)=>{
@@ -17,7 +18,7 @@ class Products {
       console.error('erro: '+ error);
       throw error;
     }
-  }
+  };
 
   async getProductObj(id) {
     let objectInfoProducts = {};
@@ -29,7 +30,7 @@ class Products {
     objectInfoProducts["lastPrice"] = success[0].dataValues.lastPrice;
     objectInfoProducts["assessments"] = await Products.processAssessments(id);
     return objectInfoProducts;
-  }
+  };
 
   static async processAssessments(id_product) {
     let objectAssessments = {
@@ -66,7 +67,7 @@ class Products {
         console.log(err);
       });
     return objectAssessments;
-  }
+  };
 
   async createProduct(object) {
     try {
@@ -74,7 +75,7 @@ class Products {
     } catch (error) {
       console.error("Erro ao inserir o produto: ", error);
     }
-  }
+  };
 
   async createAssessment(object) {
     try {
@@ -82,7 +83,24 @@ class Products {
     } catch (error) {
       console.error("Erro ao inserir a avaliacao: ", error);
     }
-  }
+  };
+
+  
+  async createProductRoute(){
+    return (req, res)=>{
+        /*LEMBRAR DE FAZER A FUNÇÃO DE AUTENTICAÇÃO, CASO
+        NÃO SEJA O ADMINISTRADOR FAZENDO A REQUISIÇÃO ELE
+        RETORNA UM THROW COM UM ERRO.*/
+        try{
+          Promise.resolve(this.getCategoryProduct('jhordan')).then((obj)=>{
+            res.json(obj);
+          });
+        }catch(err){
+          console.log('Ocorreu um erro: '+err);
+          res.json(err)
+        }
+    }
+  };
 }
 
 module.exports = Products;

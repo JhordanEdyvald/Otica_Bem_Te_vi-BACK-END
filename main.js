@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 require('dotenv').config();
 const app = express();
 app.use(express.json());
@@ -11,18 +12,23 @@ port = process.env.PORT;
     await database.sync();
 })();
 
+const Routes = require('./res/routes/Config');
 const products = require('./res/controller/products');
-const insta = new products;
-insta.getCategoryProduct('jhordan');
+const controllerProducts = new products;
 
-const Products = require('./res/controller/products');
-const insteste = new Products;
+
+Promise.resolve(controllerProducts.createProductRoute()).then((res)=>{
+    router.post(Routes.products.createProduct, res);
+});
+
 
 app.get('/',function(req, res){
     res.send({
         'teste': 'testado'
     });
 });
+
+app.use(router);
 
 app.listen(port , ()=>{
     console.log('escutando na porta ' + port);
