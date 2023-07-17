@@ -1,6 +1,14 @@
 const Routes = {
   products: {
-    createProduct: "/products/create/newproduct",
+    administrator: {
+      createProduct: "/products/administrator/create/newproduct",
+    },
+    costumers: {
+      createAssessment: "/products/costumers/create/assessments",
+    },
+    all: {
+      getProductByCategory: "/products/all/get/category",
+    },
   },
 };
 
