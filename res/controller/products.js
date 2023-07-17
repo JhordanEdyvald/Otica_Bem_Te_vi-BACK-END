@@ -72,8 +72,13 @@ class Products {
   async createProduct(object) {
     try {
       const createdProduct = await tb_products.create(object);
+      return {'status': true};
     } catch (error) {
-      console.error("Erro ao inserir o produto: ", error);
+      const all_errors = error.errors.map((item)=>{
+        return item.message;
+      }).join(' |\n   ');
+      console.error("Erro ao inserir o produto: ", all_errors);
+      return {'status':false, 'err': all_errors};
     }
   };
 
@@ -84,23 +89,7 @@ class Products {
       console.error("Erro ao inserir a avaliacao: ", error);
     }
   };
-
   
-  async createProductRoute(){
-    return (req, res)=>{
-        /*LEMBRAR DE FAZER A FUNÇÃO DE AUTENTICAÇÃO, CASO
-        NÃO SEJA O ADMINISTRADOR FAZENDO A REQUISIÇÃO ELE
-        RETORNA UM THROW COM UM ERRO.*/
-        try{
-          Promise.resolve(this.getCategoryProduct('jhordan')).then((obj)=>{
-            res.json(obj);
-          });
-        }catch(err){
-          console.log('Ocorreu um erro: '+err);
-          res.json(err)
-        }
-    }
-  };
 }
 
 module.exports = Products;
