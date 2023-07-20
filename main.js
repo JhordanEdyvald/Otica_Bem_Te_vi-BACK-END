@@ -8,6 +8,7 @@ port = process.env.PORT;
   const database = require("./db");
   const product = require("./res/modules/tb_products");
   const assessments = require("./res/modules/assessments");
+  const customers = require("./res/modules/tb_customers");
   await database.sync();
 })();
 

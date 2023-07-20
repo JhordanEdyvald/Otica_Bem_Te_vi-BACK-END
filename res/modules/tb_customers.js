@@ -1,0 +1,37 @@
+const Sequelize = require('sequelize');
+const database = require('../../db');
+
+const tb_customers = database.define('tb_customers',{
+    id : {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    nameCustomer: {
+        type: Sequelize.STRING(150),
+        allowNull: false
+    },
+    dateOfBrith: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
+    },
+    shopping: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+    },
+    phoneNumber:{
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    email: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    },
+    Gender : {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    }
+});
+
+module.exports = tb_customers;

@@ -1,9 +1,5 @@
-const express = require('express');
 const tb_products = require("../modules/tb_products");
 const assessment = require("../modules/assessments");
-const Routes = require('../routes/Config');
-
-const router = express.Router();
 
 class Products {
    async getCategoryProduct(category){
