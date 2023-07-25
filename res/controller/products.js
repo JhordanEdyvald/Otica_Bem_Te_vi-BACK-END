@@ -23,6 +23,7 @@ class Products {
     objectInfoProducts["img"] = success[0].dataValues.imgProduct;
     objectInfoProducts["title"] = success[0].dataValues.nameProduct;
     objectInfoProducts["installments"] = success[0].dataValues.installments;
+    objectInfoProducts["price"] = success[0].dataValues.price;
     objectInfoProducts["lastPrice"] = success[0].dataValues.lastPrice;
     objectInfoProducts["assessments"] = await Products.processAssessments(id);
     return objectInfoProducts;

@@ -12,7 +12,7 @@ const tb_customers = database.define('tb_customers',{
         type: Sequelize.STRING(150),
         allowNull: false
     },
-    dateOfBrith: {
+    dateOfBirth: {
         type: Sequelize.DataTypes.DATE,
         allowNull: false
     },
@@ -28,8 +28,8 @@ const tb_customers = database.define('tb_customers',{
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    Gender : {
-        type: Sequelize.STRING(255),
+    gender : {
+        type: Sequelize.STRING(10),
         allowNull: false
     }
 });
