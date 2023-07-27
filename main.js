@@ -15,6 +15,8 @@ port = process.env.PORT;
 //MIDDLEWARE ROUTERS START
 const Products_routers = require("./res/routes/products");
 app.use(Products_routers);
+const Custumers_routers = require("./res/routes/customer");
+app.use(Custumers_routers);
 //MIDDLEWARE ROUTERS END
 
 app.get("/", function (req, res) {

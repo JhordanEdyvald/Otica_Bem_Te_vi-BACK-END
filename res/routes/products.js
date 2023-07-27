@@ -5,7 +5,7 @@ const product = new Products();
 const Router = express.Router();
 
 const methods_functions = {
-  createProduct: async (req, res) => {
+  'createProduct' : async (req, res) => {
     /* LEMBRAR DE FAZER A FUNÇÃO DE AUTENTICAÇÃO, CASO
           NÃO SEJA O ADMINISTRADOR FAZENDO A REQUISIÇÃO ELE
           RETORNA UM THROW COM UM ERRO. */
@@ -31,7 +31,7 @@ const methods_functions = {
     }
   },
 
-  getProductByCategory: async (req, res) => {
+  'getProductByCategory' : async (req, res) => {
     try {
       result = await product.getCategoryProduct(req.body.category);
       res.send(result);

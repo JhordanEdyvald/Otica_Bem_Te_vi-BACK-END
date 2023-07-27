@@ -3,7 +3,8 @@ const Routes = {
     administrator: {
       createProduct: "/products/administrator/create/newproduct",
     },
-    costumers: {
+    customers: {
+      createCustomer: "/customer/all/create/newcustomer",
       createAssessment: "/products/costumers/create/assessments",
     },
     all: {
