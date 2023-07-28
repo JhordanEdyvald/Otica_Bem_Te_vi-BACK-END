@@ -2,13 +2,13 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 app.use(express.json());
-port = process.env.PORT;
 
 (async () => {
   const database = require("./db");
   const product = require("./res/modules/tb_products");
   const assessments = require("./res/modules/assessments");
   const customers = require("./res/modules/tb_customers");
+  const tb_userAcess = require("./res/modules/tb_userAcess");
   await database.sync();
 })();
 
@@ -25,6 +25,4 @@ app.get("/", function (req, res) {
   });
 });
 
-app.listen(port, () => {
-  console.log("escutando na porta " + port);
-});
+app.listen(process.env.PORT);

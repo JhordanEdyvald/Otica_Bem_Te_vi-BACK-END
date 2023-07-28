@@ -31,6 +31,10 @@ const tb_customers = database.define('tb_customers',{
     gender : {
         type: Sequelize.STRING(10),
         allowNull: false
+    },
+    userAccessId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 });
 

@@ -15,6 +15,7 @@ const methods_functions = {
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
         gender: req.body.gender,
+        password: req.body.password,
       };
 
       const result = await customers.createCustomer(inf);
@@ -38,20 +39,26 @@ const methods_functions = {
         assessment: req.body.assessment,
       };
       const result = await product.createAssessment(inf);
-      if(result.status){
-          res.status(200).json({success: result.info});
-      }else{
+      if (result.status) {
+        res.status(200).json({ success: result.info });
+      } else {
         throw result.err;
       }
     } catch (err) {
       console.log(err);
-      res.status(400).json({err: 'Erro ao inserir a avaliação: '+ err});
+      res.status(400).json({ err: "Erro ao inserir a avaliação: " + err });
     }
   },
 };
 
 //CALLS OF METHODS
-Router.post(Routes.products.customers.createCustomer, methods_functions.createCustomer);
-Router.post(Routes.products.customers.createAssessment, methods_functions.AssessmentCustomer);
+Router.post(
+  Routes.products.customers.createCustomer,
+  methods_functions.createCustomer
+);
+Router.post(
+  Routes.products.customers.createAssessment,
+  methods_functions.AssessmentCustomer
+);
 
 module.exports = Router;

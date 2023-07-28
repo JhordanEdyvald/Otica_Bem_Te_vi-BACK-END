@@ -1,4 +1,7 @@
 const tb_customers = require("../modules/tb_customers");
+const tb_userAcess = require("../modules/tb_userAcess");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 class Customers {
   async createCustomer(object) {
@@ -45,11 +48,24 @@ class Customers {
       }
     }
     try {
+      const hash = await new Promise((resolve, reject) => {
+        bcrypt.hash(object.password, saltRounds, (err, hash) => {
+          if (err) {
+            reject("Erro ao gerar o hash: " + err);
+          } else {
+            resolve(hash);
+          }
+        });
+      });
+
+      const createLogin = await tb_userAcess.create({ password: hash });
+      object.userAccessId = createLogin.id;
       const createCustomer = await tb_customers.create(object);
+
       console.log("Tudo certo, usuário criado!");
       return { status: true };
     } catch (error) {
-        console.log(error)
+      console.log(error);
       let all_errors;
       if (error.errors && error.errors.item) {
         all_errors = error.errors

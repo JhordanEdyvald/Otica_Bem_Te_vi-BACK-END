@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/JhordanEdyvald/Otica_Bem_Te_vi-BACK-END#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
     "mysql2": "^3.4.2",
     "sequelize": "^6.32.1"
   }
