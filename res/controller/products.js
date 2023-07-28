@@ -80,10 +80,30 @@ class Products {
   };
 
   async createAssessment(object) {
+    try{
+      const assessmentUser = await assessment.findOne({
+        where: { idProduct: object.idProduct, idUser: object.idUser },
+        attributes: ["id" ,"idUser", "assessment"],
+      });
+      if(assessmentUser){
+        if(assessmentUser.assessment != object.assessment){
+          assessmentUser.assessment = object.assessment;
+          await assessmentUser.save();
+          return {'status': true, 'info': 'Avaliação substituida com sucesso!'};
+        }else{
+          throw 'você não pode inserir a mesma avaliação que já tinha dado!';
+        }
+      }
+    }catch(err){
+      console.log(err);
+      return {'status': false, 'err': err};
+    }
     try {
       const createdAssessment = await assessment.create(object);
+      return {'status': true, 'info': 'Avaliação cadastrada com sucesso!'}
     } catch (error) {
       console.error("Erro ao inserir a avaliacao: ", error);
+      return {'status':false, 'err': error};
     }
   };
   
