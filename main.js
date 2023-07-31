@@ -8,9 +8,21 @@ app.use(express.json());
   const product = require("./res/modules/tb_products");
   const assessments = require("./res/modules/assessments");
   const customers = require("./res/modules/tb_customers");
-  const tb_userAcess = require("./res/modules/tb_userAcess");
+  const userAcess = require("./res/modules/tb_userAcess");
+  const permissions = require("./res/modules/tb_permissions");
+  const Client = require("./res/modules/tb_client");
   await database.sync();
 })();
+
+
+
+const callFunction = require("./res/controller/client");
+const InsFunc = new callFunction();
+InsFunc.instertClient({
+  idCustomer: 2,
+  rule: 'client',
+  auth: { email: "luffy@strawhat.com", password: "kingofpiratesgomogomo" },
+});
 
 //MIDDLEWARE ROUTERS START
 const Products_routers = require("./res/routes/products");

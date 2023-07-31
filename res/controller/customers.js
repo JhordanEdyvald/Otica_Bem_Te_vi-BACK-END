@@ -1,7 +1,5 @@
 const tb_customers = require("../modules/tb_customers");
-const tb_userAcess = require("../modules/tb_userAcess");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+const userAccess = require("./userAcess");
 
 class Customers {
   async createCustomer(object) {
@@ -31,15 +29,15 @@ class Customers {
     } catch (codeErr) {
       switch (codeErr) {
         case 0:
-          console.error("Já existe um usuário com este nome");
+          console.error("\x1b[36;1m%s\x1b[0m", "Já existe um usuário com este nome");
           return { status: false, err: "Já existe um usuário com este nome" };
           break;
         case 1:
-          console.error("Já existe um usuário com este email");
+          console.error("\x1b[36;1m%s\x1b[0m", "Já existe um usuário com este email");
           return { status: false, err: "Já existe um usuário com este email" };
           break;
         case 2:
-          console.error("Já existe um usuário com este número de celular");
+          console.error("\x1b[36;1m%s\x1b[0m", "Já existe um usuário com este número de celular");
           return {
             status: false,
             err: "Já existe um usuário com este número de celular",
@@ -48,24 +46,15 @@ class Customers {
       }
     }
     try {
-      const hash = await new Promise((resolve, reject) => {
-        bcrypt.hash(object.password, saltRounds, (err, hash) => {
-          if (err) {
-            reject("Erro ao gerar o hash: " + err);
-          } else {
-            resolve(hash);
-          }
-        });
-      });
+      const UserAccess = new userAccess();
+      object.userAccessId = await UserAccess.passwordGenerate(object.password);
 
-      const createLogin = await tb_userAcess.create({ password: hash });
-      object.userAccessId = createLogin.id;
       const createCustomer = await tb_customers.create(object);
 
       console.log("Tudo certo, usuário criado!");
       return { status: true };
     } catch (error) {
-      console.log(error);
+      console.log("\x1b[36;1m%s\x1b[0m", error);
       let all_errors;
       if (error.errors && error.errors.item) {
         all_errors = error.errors
@@ -76,7 +65,7 @@ class Customers {
       } else if (error.parent) {
         all_errors = error.parent.sqlMessage;
       }
-      console.error("Erro ao tentar criar um novo usuário: ", all_errors);
+      console.error("Erro ao tentar criar um novo usuário: "+ all_errors);
       return { status: false, err: all_errors };
     }
   }

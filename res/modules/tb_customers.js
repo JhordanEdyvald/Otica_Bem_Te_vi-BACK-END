@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const database = require('../../db');
 
-const tb_customers = database.define('tb_customers',{
-    id : {
+const tb_customers = database.define('tb_customers', {
+    id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
@@ -13,14 +13,14 @@ const tb_customers = database.define('tb_customers',{
         allowNull: false
     },
     dateOfBirth: {
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false
     },
     shopping: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    phoneNumber:{
+    phoneNumber: {
         type: Sequelize.TEXT,
         allowNull: true
     },
@@ -28,7 +28,7 @@ const tb_customers = database.define('tb_customers',{
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    gender : {
+    gender: {
         type: Sequelize.STRING(10),
         allowNull: false
     },
@@ -39,3 +39,9 @@ const tb_customers = database.define('tb_customers',{
 });
 
 module.exports = tb_customers;
+
+const assessment = require("./assessments");
+const tb_permissions = require("./tb_permissions");
+
+tb_customers.hasMany(tb_permissions, { foreignKey: 'userId' });
+tb_customers.hasMany(assessment, { foreignKey: 'idUser' });

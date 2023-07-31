@@ -5,7 +5,7 @@ const Routes = {
     },
     customers: {
       createCustomer: "/customer/all/create/newcustomer",
-      createAssessment: "/products/costumers/create/assessments",
+      createAssessment: "/customer/all/create/assessments",
     },
     all: {
       getProductByCategory: "/products/all/get/category",

@@ -12,6 +12,12 @@ const userAcess = database.define("tb_userAcess", {
     type: Sequelize.STRING(255),
     allowNull: false,
   }
+},{
+  tableName: "tb_userAcess"
 });
 
 module.exports = userAcess;
+const tb_clients = require("./tb_client");
+userAcess.hasMany(tb_clients, { foreignKey: 'userAccessId' });
+
+
