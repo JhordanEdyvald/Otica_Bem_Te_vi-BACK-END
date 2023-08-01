@@ -20,7 +20,7 @@ const callFunction = require("./res/controller/client");
 const InsFunc = new callFunction();
 InsFunc.instertClient({
   idCustomer: 2,
-  rule: 'client',
+  rule: 'customer',
   auth: { email: "luffy@strawhat.com", password: "kingofpiratesgomogomo" },
 });
 

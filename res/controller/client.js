@@ -24,7 +24,6 @@ class Client {
           .catch((err) => {
             console.log("\x1b[36;1m%s\x1b[0m", err);
           });
-          //console.log(passwordAccess);
 
           if(!passwordAccess){
             throw 'Senha ou Email incorretos!';

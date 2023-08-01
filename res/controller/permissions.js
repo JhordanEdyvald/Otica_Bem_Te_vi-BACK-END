@@ -3,19 +3,6 @@ const tb_permissions = require("../modules/tb_permissions");
 class Permissions {
     async addPermission(object) {
         try {
-            let infoVerify;
-            try {
-                infoVerify = await tb_permissions.findOne({
-                    where: { userId: object.userId },
-                    attributes: ['rule']
-                });
-            } catch (err) {
-            }
-        } catch (err) {
-            return { status: false, reject: err }
-        }
-        try {
-
             if (!object.rule) {
                 throw new Error('Defina uma regra de controle para o usuário');
             }
@@ -40,15 +27,30 @@ class Permissions {
                     success = { status: true, success: 'Permissão alterada com sucesso: consumidor' };
                     break;
             }
-            await tb_permissions.create({
-                userId: object.idCustomer,
-                rules: JSON.stringify(rules)
+            const infoVerify = await tb_permissions.findOne({
+                where: { userId: object.userId },
+                attributes: ['rules']
             });
-            return success;
 
+            if (!infoVerify.rules) {
+                await tb_permissions.create({
+                    userId: object.idCustomer,
+                    rules: JSON.stringify(rules)
+                });
+                return success;
+
+            } else if (JSON.stringify(rules) == infoVerify.rules) {
+                throw 'O usuário já possui essa permissão';
+            } else {
+                const updatedRow = await tb_permissions.update(
+                    { rules: JSON.stringify(rules) },
+                    { where: { userId: object.userId } }
+                );
+                return success;
+            };
         } catch (err) {
             console.log(err);
-            return { status: false, error: err.message };
+            return { status: false, error: err };
         }
     }
 }
